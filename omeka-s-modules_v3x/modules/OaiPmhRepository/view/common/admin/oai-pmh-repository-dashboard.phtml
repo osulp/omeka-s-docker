@@ -1,0 +1,66 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var string $globalRepository
+ * @var string $bySiteRepository
+ * @var \Omeka\Api\Representation\SiteRepresentation[] $sites
+ */
+$translate = $this->plugin('translate');
+$options = ['query' => ['verb' => 'Identify']];
+?>
+
+<div id="oai-pmh-repository" class="panel">
+    <h2><?= $translate('OAI-PMH Repository') ?></h2>
+    <h4><?= $translate('Global repository') ?></h4>
+    <p><?php
+    switch ($globalRepository):
+    case 'none':
+        echo $this->hyperlink($translate('Without oai sets'), $this->url('oai-pmh', [], $options));
+        break;
+    case 'item_set':
+        echo $this->hyperlink($translate('With item sets as oai sets'), $this->url('oai-pmh', [], $options));
+        break;
+    case 'list_item_sets':
+        echo $this->hyperlink($translate('With a specific list of item sets as oai sets'), $this->url('oai-pmh', [], $options));
+        break;
+    case 'queries':
+        echo $this->hyperlink($translate('With dynamic oai sets from queries'), $this->url('oai-pmh', [], $options));
+        break;
+    case 'site_pool':
+        echo $this->hyperlink($translate('With sites as oai sets'), $this->url('oai-pmh', [], $options));
+        break;
+    default:
+        echo $translate('Disabled.');
+        break;
+    endswitch;
+    ?>
+    </p>
+
+    <?php if (in_array($bySiteRepository, ['none', 'item_set'])): ?>
+    <h4><?= $translate('Site repositories') ?></h4>
+    <?php
+    switch ($bySiteRepository):
+    case 'none': ?>
+        <p>
+        <?= $translate('Without oai sets.') ?>
+        </p>
+        <?php
+        // No break.
+    case 'item_set':
+        if (empty($sites)): ?>
+        <p><?= $translate('No site.') ?></p>
+        <?php
+        else: ?>
+        <ul>
+        <?php foreach ($sites as $site): ?>
+            <?php $oaiUrl = $this->url('site/oai-pmh', ['site-slug' => $site->slug()], $options); ?>
+            <li><?= $this->hyperlink($site->title(), $oaiUrl) ?></li>
+            <?php endforeach; ?>
+        </ul>
+        <?php
+        endif;
+        break;
+    endswitch;
+    endif;
+    ?>
+</div>
