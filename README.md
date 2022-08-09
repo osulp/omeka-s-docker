@@ -4,6 +4,28 @@
 
 Install Docker and Docker-compose on your host (can be a physical or virtual machine). 
 
+Build the dockerfile
+
+In visual studio code, right-click on the Dockerfile and choose Build image or use command line in terminal.  
+Save the image with a tag like omekasdocker:latest
+
+The Dockerfile sets up an image based on the php:7.2-apache image (The modules don't work with php8 yet), adds php dependecies, and copies the omeka-s-3.2.2/omeka-s files to the var/www/html folder in the image.  It also copies the modules to the modules folder.  I only included Easy Install and the OaiPnhRepository and OaiPmhHarvester modules.
+
+Once the build file is completed, it will have added the image to your local docker.
+
+Run docker-compose.yml
+
+If you changed the image tag name from omekasdocker:latest, make sure to update the docker-compose.yml image pointer in the file.
+
+In VS Code you can right click anywhere in the docker-compose.yml file and select to Compose Up to get the containers running.  It runs three containers, database, phpmyadmin, and the omeka web app.
+
+Once container are running, go to localhost on your web browser. It will walk through adding a user and installing.
+
+
+
+
+
+
 Download the file "docker-compose.yml".
 
 From the directory containing the "docker-compose.yml" file:
