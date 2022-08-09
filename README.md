@@ -21,9 +21,7 @@ In VS Code you can right click anywhere in the docker-compose.yml file and selec
 
 Once container are running, go to localhost on your web browser. It will walk through adding a user and installing.
 
-
-
-
+## Instructions from original GIT Repo (more for on a server vs development situation)
 
 
 Download the file "docker-compose.yml".
